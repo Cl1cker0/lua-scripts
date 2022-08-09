@@ -1,3 +1,4 @@
+--credits to applless (czopek)
 local ScreenGui = Instance.new("ScreenGui")
 local Main = Instance.new("Frame")
 local Frame = Instance.new("Frame")
