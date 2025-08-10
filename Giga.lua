@@ -45,7 +45,7 @@ shadow.Parent = backgroundFrame
 local header = Instance.new("TextLabel")
 header.Size = UDim2.new(1, 0, 0, 30)
 header.BackgroundTransparency = 1
-header.Text = "Makal Hub Tween To Base"
+header.Text = "Cesar es un Marica"
 header.TextColor3 = Color3.fromRGB(255, 255, 255)
 header.TextSize = 18
 header.Font = Enum.Font.GothamBold
@@ -70,7 +70,7 @@ local statusLabel = Instance.new("TextLabel")
 statusLabel.Size = UDim2.new(1, -20, 0, 40)
 statusLabel.Position = UDim2.new(0, 10, 0, 40)
 statusLabel.BackgroundTransparency = 1
-statusLabel.Text = "Press Start before stealing!"
+statusLabel.Text = "Presiona Start antes de robar!"
 statusLabel.TextColor3 = Color3.fromRGB(200, 200, 200)
 statusLabel.TextSize = 14
 statusLabel.Font = Enum.Font.Gotham
@@ -147,7 +147,7 @@ end)
 local function FindDelivery()
     local plots = workspace:FindFirstChild("Plots")
     if not plots then
-        warn("Plots folder not found in workspace")
+        warn("No se encontraron Plots")
         return
     end
     for _, plot in pairs(plots:GetChildren()) do
@@ -200,7 +200,7 @@ local function moveToDelivery()
 
     local lv, attachment = setupFlight()
     local currentY = hrp.Position.Y
-    updateStatus("Flying to delivery...")
+    updateStatus("Volando al delivery...")
     hrp.CFrame = hrp.CFrame + Vector3.new(0, 0, 0)
     task.wait(0.2)
 
@@ -220,8 +220,8 @@ local function moveToDelivery()
         end
 
         if not targetHitbox or not targetHitbox:IsDescendantOf(workspace) then
-            warn("Target lost during flight")
-            updateStatus("Delivery target lost")
+            warn("Objetivo se perdio en el delivery")
+            updateStatus("Delivery objetivo perdido")
             lv.VectorVelocity = Vector3.zero
             lv:Destroy()
             connection:Disconnect()
@@ -234,7 +234,7 @@ local function moveToDelivery()
         local distance = direction.Magnitude
 
         if distance <= 0.5 then
-            updateStatus("Reached delivery target, distance: " .. distance)
+            updateStatus("Llegado al delivery, distancia: " .. distance)
             lv.VectorVelocity = Vector3.zero
             lv:Destroy()
             connection:Disconnect()
@@ -249,7 +249,7 @@ local function moveToDelivery()
 
         if tick() - startTime >= maxTime then
             warn("Timeout before reaching delivery target")
-            updateStatus("Timeout during delivery")
+            updateStatus("Tiempo agotado delivery")
             lv.VectorVelocity = Vector3.zero
             lv:Destroy()
             connection:Disconnect()
@@ -259,7 +259,7 @@ local function moveToDelivery()
 
         local unitDir = direction.Unit
         lv.VectorVelocity = Vector3.new(unitDir.X * speed, unitDir.Y * speed, unitDir.Z * speed)
-        updateStatus("Moving to delivery, distance: " .. distance)
+        updateStatus("Moviendo al delivery, distancia: " .. distance)
     end)
 
     while not reached do
@@ -268,7 +268,7 @@ local function moveToDelivery()
 
     if not isMoving then return end
 
-    updateStatus("Starting smooth deceleration for delivery")
+    updateStatus("Empezando aceleracion para el delivery")
     lv, attachment = setupFlight()
     for i = 1, 12 do
         if not isMoving then break end
@@ -277,7 +277,7 @@ local function moveToDelivery()
         if dir.Magnitude > 0 then
             dir = dir.Unit
             lv.VectorVelocity = Vector3.new(dir.X * speed, dir.Y * speed, dir.Z * speed)
-            updateStatus("Decelerating for delivery, iteration: " .. i)
+            updateStatus("Decelerando para el delivery, iteration: " .. i)
         else
             lv.VectorVelocity = Vector3.zero
         end
@@ -287,7 +287,7 @@ local function moveToDelivery()
 
     if not isMoving then return end
 
-    updateStatus("Starting smooth descent for delivery")
+    updateStatus("Iniciando descenso para delivery")
     lv, attachment = setupFlight()
     local targetY = targetHitbox.Position.Y - 6 + 2.5 -- Adjusted to 6 studs below, plus original 2.5 offset
     local reachedY = false
@@ -326,7 +326,7 @@ local function moveToDelivery()
         if isMoving then
             updateStatus("Idle")
             isMoving = false
-            textButton.Text = "Start Process"
+            textButton.Text = "Empezar Proceso"
         end
     end)
 end
@@ -512,15 +512,15 @@ end
 local function moveToTarget(target, level, fromThirdFloor)
     local pos = getTargetPosition(target)
     if not pos then
-        warn("Invalid target position")
-        updateStatus("Invalid target")
+        warn("Pocision invalida")
+        updateStatus("Destino invalido")
         isMoving = false
-        textButton.Text = "Start Process"
+        textButton.Text = "Empezar proceso"
         return
     end
 
     local tolerance = 0.5  -- Допуск для проверки позиции
-    updateStatus("Moving to target at " .. tostring(pos))
+    updateStatus("Moviendo el destino a " .. tostring(pos))
     moveUntil(
         function()
             if level == 1 or (level == 2 and fromThirdFloor) then
@@ -529,7 +529,7 @@ local function moveToTarget(target, level, fromThirdFloor)
                 local dz = math.abs(charPos.Z - pos.Z)
                 local reached = dx < tolerance and dz < tolerance
                 if reached then
-                    updateStatus("Reached target center on floor " .. level)
+                    updateStatus("Llegado al piso " .. level)
                 end
                 return reached
             elseif level == 2 then
@@ -542,7 +542,7 @@ local function moveToTarget(target, level, fromThirdFloor)
             else
                 local reached = (hrp.Position - pos).Magnitude < 1
                 if reached then
-                    updateStatus("Reached target on floor " .. level)
+                    updateStatus("Llegado al piso " .. level)
                 end
                 return reached
             end
@@ -554,22 +554,22 @@ local function moveToTarget(target, level, fromThirdFloor)
             if level == 2 and not fromThirdFloor then
                 local mainTarget = getTargetForFloor(2, true)
                 if mainTarget then
-                    updateStatus("Found main target on floor 2")
+                    updateStatus("Objetivo Encontrado en Piso 2")
                     moveToTarget(mainTarget, 2, true)
                 else
                     warn("No main target found on floor 2")
-                    updateStatus("No main target found")
+                    updateStatus("No objetivos Encontrados")
                     isMoving = false
-                    textButton.Text = "Start Process"
+                    textButton.Text = "Empezar Proceso"
                 end
             elseif level == 3 then
-                updateStatus("Waiting for fall from third floor")
+                updateStatus("Esperando a caer del tercer piso")
                 local startY = hrp.Position.Y
                 local conn
                 conn = RunService.Heartbeat:Connect(function()
                     if hrp.Position.Y < startY - 1 then
                         conn:Disconnect()
-                        updateStatus("Falling from third floor")
+                        updateStatus("Tercer Piso")
                         local newTarget = getTargetForFloor(2, true)
                         if newTarget then
                             moveToTarget(newTarget, 2, true)
@@ -686,7 +686,7 @@ local function useInvisibilityCloak()
     if cloak then
         for i = 1, 2 do
             cloak:Activate()
-            updateStatus("Activated cloak (" .. i .. "/2)")
+            updateStatus("Capa activada(" .. i .. "/2)")
             task.wait(0.5)
         end
     else
@@ -774,8 +774,8 @@ textButton.MouseButton1Click:Connect(function()
     if isMoving then
         isMoving = false
         isActive = false
-        textButton.Text = "Start Process"
-        updateStatus("Process canceled")
+        textButton.Text = "Empezar Proceso"
+        updateStatus("Proceso Cancelado")
         
         if promptConnection then
             promptConnection:Disconnect()
