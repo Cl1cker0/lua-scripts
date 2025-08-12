@@ -18,7 +18,7 @@ local UI = Atlas.new({
     ConfigFolder = "Silentware";
     Color = Color3.fromRGB(255,0,0);
     Bind = "";
-    UseLoader = true;
+    UseLoader = false;
     FullName = "Silentware";
     CheckKey = function(inputtedKey)
         return inputtedKey== "0x57iloveu"
