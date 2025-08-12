@@ -19,10 +19,7 @@ local UI = Atlas.new({
     Color = Color3.fromRGB(255,0,0);
     Bind = "";
     UseLoader = false;
-    FullName = "Silentware";
-    CheckKey = function(inputtedKey)
-        return inputtedKey== "0x57iloveu"
-    end;
+    FullName = "Silentwarest";
     Discord = "https://link-target.net/554808/best-hack-fallen";
 })
 
