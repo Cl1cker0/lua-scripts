@@ -23,7 +23,7 @@ local UI = Atlas.new({
     Discord = "https://link-target.net/554808/best-hack-fallen";
 })
 
-game:GetService("CoreGui").Atlas.Main.Visible = true
+game:GetService("CoreGui").Atlas.Main.Visible = false
 
 
 
